@@ -26,13 +26,19 @@ export default function App() {
     queryClient.invalidateQueries({ queryKey: ['notes'] });
   };
 
+   const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(1);
+   }; 
+
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <SearchBox value={search} onChange={setSearch} />
+        <SearchBox value={search} onChange={handleSearchChange} />
         {(data?.totalPages ?? 0)> 1 && (
           <Pagination
             pageCount={data?.totalPages ?? 0}
+            currentPage={page} 
             onPageChange={setPage}
           />
         )}
@@ -43,7 +49,7 @@ export default function App() {
 
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error loading notes</p>}
-      {data?.results?.length ? <NoteList notes={data.results} /> : null}
+      {data?.notes?.length ? <NoteList notes={data.notes} /> : null}
 
 
       {isOpen && (

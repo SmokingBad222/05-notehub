@@ -17,18 +17,16 @@ export interface FetchNotesParams {
   search?: string;
 }
 export interface FetchNotesResponse {
-  results: Note[];      
+  notes: Note[];      
   totalPages: number;
   page: number;
 }
 
-export const fetchNotes = async (
-  params: FetchNotesParams
-): Promise<FetchNotesResponse> => {
+export const fetchNotes = async (params: FetchNotesParams): Promise<FetchNotesResponse> => {
   const { data } = await api.get<FetchNotesResponse>('/notes', { params });
-  console.log('API response:', data);
   return data;
 };
+
 
 export const createNote = async (
   body: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>
