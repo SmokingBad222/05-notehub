@@ -8,6 +8,12 @@ interface NoteFormProps {
   onCreated: () => void;
 }
 
+interface FormValues {
+  title: string;
+  content: string;
+  tag: 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
+}
+
 export default function NoteForm({ onCreated }: NoteFormProps) {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
@@ -27,7 +33,7 @@ export default function NoteForm({ onCreated }: NoteFormProps) {
   });
 
   return (
-    <Formik
+    <Formik <FormValues>
       initialValues={{ title: '', content: '', tag: 'Todo' }}
       validationSchema={schema}
       onSubmit={(values) => mutate(values)}

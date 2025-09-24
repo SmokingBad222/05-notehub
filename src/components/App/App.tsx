@@ -30,10 +30,10 @@ export default function App() {
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox value={search} onChange={setSearch} />
-        {data?.totalPages! > 1 && (
+        {(data?.totalPages ?? 0)> 1 && (
           <Pagination
-            pageCount={data!.totalPages}
-            onPageChange={(p) => setPage(p)}
+            pageCount={data?.totalPages ?? 0}
+            onPageChange={setPage}
           />
         )}
         <button className={css.button} onClick={() => setIsOpen(true)}>
@@ -43,7 +43,8 @@ export default function App() {
 
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error loading notes</p>}
-      {data && data.data.length > 0 && <NoteList notes={data.data} />}
+      {data?.results?.length ? <NoteList notes={data.results} /> : null}
+
 
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
